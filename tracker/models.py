@@ -1,9 +1,9 @@
+from decimal import Decimal
 from email.policy import default
 
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from web3.main import Web3
 
 from tracker.utils.db import unique_slug_generator
 
@@ -25,6 +25,7 @@ class Token(models.Model):
     name = models.CharField(max_length=50)
     code_name = models.CharField(max_length=10)
     contract_address = models.CharField(max_length=100)
+    decimals = models.IntegerField(default=18)
 
     def img_logo_path(instance, filename):
         return f'tokens/{instance.contract_address}/{filename}'
@@ -38,7 +39,7 @@ class Token(models.Model):
         supply = []
         for s in self.supply_data.all():
             dates.append(s.created_at.strftime('%m/%d/%Y %H:%M'))
-            supply.append(Web3.fromWei(s.supply, "ether"))
+            supply.append(s.supply * Decimal(10 ** -self.decimals))
 
         return {
             'dates': dates,
