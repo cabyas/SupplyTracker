@@ -2,7 +2,8 @@ version: "3.7"
 
 services:
   supply_tracker:
-    working_dir: .
+    build:
+      context: .
     volumes:
       - /var/www/supplytracker.cabyas.com/static:/app/static
       - /var/www/supplytracker.cabyas.com/media:/app/media
@@ -10,8 +11,6 @@ services:
       - 8015:8015
     networks:
       - front_supply_tracker_network
-
-
 
 networks:
   front_supply_tracker_network:
