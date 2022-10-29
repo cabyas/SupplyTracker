@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  supply_tracker:
+    working_dir: .
+    volumes:
+      - /var/www/supplytracker.cabyas.com/static:/app/static
+      - /var/www/supplytracker.cabyas.com/media:/app/media
+    ports:
+      - 8015:8015
+    networks:
+      - front_supply_tracker_network
+
+
+
+networks:
+  front_supply_tracker_network:
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.18.5.0/24
