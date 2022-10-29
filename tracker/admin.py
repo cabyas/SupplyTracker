@@ -8,6 +8,12 @@ class TokenAdmin(admin.ModelAdmin):
     search_fields = ('name', 'code_name', 'contract_address')
     list_display = ('name', 'code_name', 'contract_address')
     list_filter = ('name', )
+    actions = ('create_supply_record', )
+
+    @admin.action(description="Create supply record")
+    def create_supply_record(self, request, queryset):
+        for token in queryset:
+            token.create_supply_snapshot()
 
 
 @admin.register(SupplySnapshot)

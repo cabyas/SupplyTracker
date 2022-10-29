@@ -5,17 +5,26 @@
         <h2 class="mb-4">See how the supply grows or get burned 🔥🔥🔥</h2>
     {% endif %}
     
-    {% for token in object_list %}
-        <div class="mb-3">
-            👉 {{ token.name }} 
-            - 
-            <a href="{% url 'tracker:details' token.contract_address %}">👁 See</a>
-        </div>
-    {% empty %}
-        <div class="empty-languages">
-          No tokens found. Contact with <a href="https://t.me/N4gN14" target="_blank">@N4Gn14</a> 😥
-        </div>
-    {% endfor %}
+    <div class="row">
+        {% for token in object_list %}
+            <div class="col-md-6 col-lg-4 mb-3">
+                <a class="card" href="{% url 'tracker:details' token.contract_address %}">
+                    <div class="card-body row">
+                        <div class="col-3">
+                            <img src="{{ token.logo.url }}" width="50" height="50" alt="logo" />
+                        </div>
+                        <div class="col-9 d-flex align-items-center">
+                            {{ token.name }} 
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% empty %}
+            <div class="empty-languages">
+            No tokens found. Contact with <a href="https://t.me/N4gN14" target="_blank">@N4Gn14</a> 😥
+            </div>
+        {% endfor %}
+    </div>
 
     {% if page_obj.has_previous or page_obj.has_next %}
         <nav class="mt-4">
